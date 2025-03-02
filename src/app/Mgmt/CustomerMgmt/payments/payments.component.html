@@ -1,0 +1,47 @@
+<form [formGroup]="paymentForm" (ngSubmit)="sendPayment()">
+    <div class="p-field">
+      <label for="customer">Customer Name</label>
+      <p-autoComplete 
+        [(ngModel)]="selectedCustomer" 
+        [suggestions]="filteredCustomers" 
+        (completeMethod)="searchCustomer($event)" 
+        field="name" 
+        [dropdown]="true" 
+        (onSelect)="onCustomerSelect()" 
+        placeholder="Search Customer"
+        formControlName="customer">
+      </p-autoComplete>
+    </div>
+  
+    <div class="p-field">
+      <img [src]="selectedCustomer.profilePic" *ngIf="selectedCustomer.profilePic" alt="" />
+    </div>
+  
+    <div class="p-field">
+      <label>Room Number</label>
+      <input type="text" pInputText formControlName="roomNumber" />
+    </div>
+  
+    <div class="p-field">
+      <label>Email</label>
+      <input type="email" pInputText formControlName="email" />
+    </div>
+  
+    <div class="p-field">
+      <label>Phone</label>
+      <input type="text" pInputText formControlName="phone" />
+    </div>
+  
+    <div class="p-field">
+      <label>Amount</label>
+      <input type="number" pInputText formControlName="amount" />
+    </div>
+  
+    <div class="p-field">
+      <label>Due Date</label>
+      <input type="date" pInputText formControlName="dueDate" />
+    </div>
+  
+    <button pButton type="submit" label="Send"></button>
+  </form>
+  

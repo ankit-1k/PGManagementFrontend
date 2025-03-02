@@ -27,4 +27,8 @@ export class CustomermgmtService {
   deleteCustomer(id: string): Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}/deletecustomer/${id}`);
   }
+
+  sendPayment(data: any) {
+    return this.http.post(`${this.baseUrl}/sendPayment`, data);
+  }
 }
