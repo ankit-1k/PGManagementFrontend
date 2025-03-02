@@ -1,0 +1,108 @@
+<div>
+  <p-button (onClick)="showDialog('center')" label="Add Room"></p-button>
+
+  <p-dialog
+    header="Add Room"
+    [(visible)]="addRoomvisible"
+    [modal]="true"
+    [style]="{ width: '400px' }"
+  >
+    <form [formGroup]="roomForm" (ngSubmit)="createRoom()">
+      <div>
+        <label>Room Name</label>
+        <input type="text" pInputText formControlName="roomName" />
+      </div>
+      <div>
+        <label>Bed Count</label>
+        <input type="text" pInputText formControlName="roomBedCount" />
+      </div>
+      <button
+        pButton
+        type="submit"
+        label="Save"
+        [disabled]="!roomForm.valid"
+      ></button>
+    </form>
+  </p-dialog>
+
+  <p-table [value]="rooms">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Room Name</th>
+        <th>Total Beds</th>
+        <th>Occupied Beds</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-room>
+      <tr>
+        <td>{{ room.roomName }}</td>
+        <td>{{ room.roomBedCount }}</td>
+        <td>{{ getOccupiedBeds(room.roomName) }}</td>
+        <td>
+          <button
+            pButton
+            icon="pi pi-trash"
+            (click)="deleteRoom(room._id)"
+          ></button>
+          <button pButton icon="pi pi-pencil" (click)="editRoom(room)"></button>
+          <button pButton icon="pi pi-eye" (click)="roomMembsers(room)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog
+  header="Edit Room"
+  [(visible)]="editRoomVisible"
+  [modal]="true"
+  [style]="{ width: '400px' }"
+>
+  <form [formGroup]="roomForm" (ngSubmit)="updateRoom()">
+    <div>
+      <label>Room Name</label>
+      <input type="text" pInputText formControlName="roomName" />
+    </div>
+    <div>
+      <label>Bed Count</label>
+      <input type="text" pInputText formControlName="roomBedCount" />
+    </div>
+    <button
+      pButton
+      type="submit"
+      label="Update"
+      [disabled]="!roomForm.valid"
+    ></button>
+  </form>
+</p-dialog>
+
+<p-dialog
+  header="Room Members"
+  [(visible)]="roomMembersVisible"
+  [modal]="true"
+  [style]="{ width: '500px' }"
+>
+  <ng-container *ngIf="roomDetails?.length > 0; else noData">
+    <p-table [value]="roomDetails">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-member>
+        <tr>
+          <td>{{ member.name }}</td>
+          <td>{{ member.email }}</td>
+          <td>{{ member.phone }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-container>
+
+  <ng-template #noData>
+    <p>No members found for this room.</p>
+  </ng-template>
+</p-dialog>

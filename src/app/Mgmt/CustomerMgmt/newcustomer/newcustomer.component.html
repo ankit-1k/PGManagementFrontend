@@ -1,0 +1,215 @@
+<div class="container">
+  <form [formGroup]="customerForm">
+    <p-steps [model]="steps" [activeIndex]="currentStep"></p-steps>
+
+    <!-- Step 1: Basic Information -->
+    <div *ngIf="currentStep === 0">
+      <h5>Basic Information</h5>
+      <div class="row">
+        <div class="col-md-4">
+          <label>Name</label>
+          <input type="text" pInputText class="w-100" formControlName="name" />
+        </div>
+        <div class="col-md-4">
+          <label>DOB</label>
+          <p-calendar formControlName="dob" class="w-100"></p-calendar>
+        </div>
+        <div class="col-md-4">
+          <label>Gender</label>
+          <p-dropdown
+            [options]="gender"
+            formControlName="gender"
+            placeholder="Select Gender"
+          ></p-dropdown>
+        </div>
+        <div class="col-md-4">
+          <label>Phone</label>
+          <input type="text" pInputText class="w-100" formControlName="phone" />
+        </div>
+        <div class="col-md-4">
+          <label>Email</label>
+          <input
+            type="email"
+            pInputText
+            class="w-100"
+            formControlName="email"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Address Details -->
+    <div *ngIf="currentStep === 1">
+      <h5>Address Details</h5>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Permanent Address</label>
+          <textarea
+            pInputTextarea
+            class="w-100"
+            formControlName="permanentAddress"
+          ></textarea>
+        </div>
+        <div class="col-md-6">
+          <label>Current Address</label>
+          <textarea
+            pInputTextarea
+            class="w-100"
+            formControlName="currentAddress"
+          ></textarea>
+        </div>
+        <div class="col-md-4">
+          <label>City</label>
+          <input type="text" pInputText class="w-100" formControlName="city" />
+        </div>
+        <div class="col-md-4">
+          <label>State</label>
+          <input type="text" pInputText class="w-100" formControlName="state" />
+        </div>
+        <div class="col-md-4">
+          <label>Pincode</label>
+          <input
+            type="text"
+            pInputText
+            class="w-100"
+            formControlName="pincode"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: ID Proof & Documents -->
+    <div *ngIf="currentStep === 2">
+      <h5>ID Proof & Documents</h5>
+      <div class="row">
+        <div class="col-md-4">
+          <label>Profile Picture</label>
+          <input
+            type="file"
+            (change)="onFileSelect($event, 'profilePic')"
+            accept="image/*"
+          />
+          <img
+            *ngIf="imagePreview.profilePic"
+            [src]="imagePreview.profilePic"
+            height="100"
+          />
+        </div>
+        <div class="col-md-4">
+          <label>ID Proof</label>
+          <input
+            type="file"
+            (change)="onFileSelect($event, 'idProof')"
+            accept="image/*"
+          />
+          <img
+            *ngIf="imagePreview.idProof"
+            [src]="imagePreview.idProof"
+            height="100"
+          />
+        </div>
+        <div class="col-md-4">
+          <label>Emergency Contact Name</label>
+          <input
+            type="text"
+            pInputText
+            class="w-100"
+            formControlName="emergencyName"
+          />
+        </div>
+        <div class="col-md-4">
+          <label>Emergency Contact Number</label>
+          <input
+            type="text"
+            pInputText
+            class="w-100"
+            formControlName="emergencyContact"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4: PG Stay Details -->
+    <div *ngIf="currentStep === 3">
+      <h5>PG Stay Details</h5>
+      <div class="row">
+        <div class="col-md-4">
+          <label>Check-in Date</label>
+          <p-calendar formControlName="checkInDate" class="w-100"></p-calendar>
+        </div>
+        <div class="col-md-4">
+          <label>Room Number</label>
+          <div class="d-flex">
+            <input
+              type="text"
+              pInputText
+              class="w-100"
+              formControlName="roomNumber"
+            />
+            <button pButton label="check" (click)="checkAvailability()"></button>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label>Bed Number</label>
+          <input
+            type="text"
+            pInputText
+            class="w-100"
+            formControlName="bedNumber"
+          />
+        </div>
+        <div class="col-md-4">
+          <label>Room Type</label>
+          <p-dropdown
+            [options]="roomType"
+            formControlName="roomType"
+            placeholder="Select Room Type"
+          ></p-dropdown>
+        </div>
+        <div class="col-md-4">
+          <label>Rent Amount</label>
+          <input
+            type="text"
+            pInputText
+            class="w-100"
+            formControlName="rentAmount"
+          />
+        </div>
+        <div class="col-md-4">
+          <label>Security Deposit</label>
+          <input
+            type="text"
+            pInputText
+            class="w-100"
+            formControlName="securityDeposit"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="mt-3">
+      <button
+        pButton
+        label="Previous"
+        icon="pi pi-arrow-left"
+        (click)="prevStep()"
+        [disabled]="currentStep === 0"
+      ></button>
+      <button
+        pButton
+        label="Next"
+        icon="pi pi-arrow-right"
+        (click)="nextStep()"
+        *ngIf="currentStep < steps.length - 1"
+      ></button>
+      <button
+        pButton
+        label="Submit"
+        icon="pi pi-check"
+        (click)="submitForm()"
+        *ngIf="currentStep === steps.length - 1"
+      ></button>
+    </div>
+  </form>
+</div>

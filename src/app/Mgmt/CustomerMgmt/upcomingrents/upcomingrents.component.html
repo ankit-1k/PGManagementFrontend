@@ -1,0 +1,31 @@
+<p-table [value]="upcomingRents">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Action</th>
+      <th>Name</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>Join Date</th>
+      <th>Next Rent Date</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rent>
+    <tr>
+      <td>
+        <p-button
+          styleClass="p-button-rounded me-1 p-button-info p-button-text p-button-raised"
+          icon="pi pi-phone" (click)="phoneCall(rent.phone)"
+        ></p-button>
+        <p-button
+          styleClass="p-button-rounded me-1 p-button-success p-button-text p-button-raised"
+          icon="pi pi-whatsapp" (click)="sendWhatsAppMessage(rent.phone, rent.name)"
+        ></p-button>
+      </td>
+      <td>{{ rent.name }}</td>
+      <td>{{ rent.phone }}</td>
+      <td>{{ rent.email }}</td>
+      <td>{{ rent.checkInDate }}</td>
+      <td>{{ rent.dueDate }}</td>
+    </tr>
+  </ng-template>
+</p-table>

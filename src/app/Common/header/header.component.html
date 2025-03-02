@@ -1,0 +1,40 @@
+<p-sidebar [(visible)]="sidebarVisible" styleClass="custom-sidebar" *ngIf="showHeader">
+    <div class="sedebar-acc">
+        <p-accordion class="w-full">
+            <div class="flex align-items-center p-2 pt-3 pb-3">
+                <i class="pi pi-home" style="margin-left: 13px;"></i>
+                <a routerLink="/home" class="vertical-align-middle text-dark ms-2 pointer"
+                    style="text-decoration: none;">Home</a>
+            </div>
+            <p-accordionTab>
+                <ng-template pTemplate="header">
+                    <div class="flex align-items-center">
+                        <i class="pi pi-globe mr-2"></i>
+                        <span class="vertical-align-middle ms-2">Cust MGMT</span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="content">
+                    <a routerLink="/mgmt/newcustomer" class="link-nav">New Cus</a> <br><br>
+                    <a routerLink="/mgmt/customers" class="link-nav">Cus</a> <br><br>
+                    <a routerLink="/mgmt/upcomingrents" class="link-nav">Upcoming</a> <br><br>
+                </ng-template>
+            </p-accordionTab>
+            <p-accordionTab>
+                <ng-template pTemplate="header">
+                    <div class="flex align-items-center">
+                        <i class="pi pi-globe mr-2"></i>
+                        <span class="vertical-align-middle ms-2">Room MGMT</span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="content">
+                    <a routerLink="/mgmt/rooms" class="link-nav">Rooms</a> <br><br>
+                </ng-template>
+            </p-accordionTab>
+        </p-accordion>
+    </div>
+</p-sidebar>
+
+<!-- Sidebar Toggle Button -->
+<div class="nav-bar" *ngIf="showHeader">
+    <p-button (click)="sidebarVisible = true" icon="pi pi-bars"></p-button>
+</div>
