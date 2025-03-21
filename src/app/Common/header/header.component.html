@@ -3,7 +3,7 @@
         <p-accordion class="w-full">
             <div class="flex align-items-center p-2 pt-3 pb-3">
                 <i class="pi pi-home" style="margin-left: 13px;"></i>
-                <a routerLink="/home" class="vertical-align-middle text-dark ms-2 pointer"
+                <a routerLink="/mgmt/home" class="vertical-align-middle text-dark ms-2 pointer"
                     style="text-decoration: none;">Home</a>
             </div>
             <p-accordionTab>
@@ -29,6 +29,17 @@
                 </ng-template>
                 <ng-template pTemplate="content">
                     <a routerLink="/mgmt/rooms" class="link-nav">Rooms</a> <br><br>
+                </ng-template>
+            </p-accordionTab>
+            <p-accordionTab>
+                <ng-template pTemplate="header">
+                    <div class="flex align-items-center">
+                        <i class="pi pi-globe mr-2"></i>
+                        <span class="vertical-align-middle ms-2">Mnu</span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="content">
+                    <a routerLink="/mgmt/menu" class="link-nav">Mnu</a> <br><br>
                 </ng-template>
             </p-accordionTab>
         </p-accordion>

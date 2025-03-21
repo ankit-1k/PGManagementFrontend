@@ -1,47 +1,66 @@
-<form [formGroup]="paymentForm" (ngSubmit)="sendPayment()">
-    <div class="p-field">
-      <label for="customer">Customer Name</label>
-      <p-autoComplete 
-        [(ngModel)]="selectedCustomer" 
-        [suggestions]="filteredCustomers" 
-        (completeMethod)="searchCustomer($event)" 
-        field="name" 
-        [dropdown]="true" 
-        (onSelect)="onCustomerSelect()" 
-        placeholder="Search Customer"
-        formControlName="customer">
-      </p-autoComplete>
+<div class="container-fluid position-relative">
+  <div class="row">
+    <div class="col-md-6">
+      <form [formGroup]="paymentForm" (ngSubmit)="sendPayment()">
+        <div class="row">
+          <h3 class="mt-3">PR :</h3>
+          <div class="col-md-6 mt-3">
+            <label class="d-block" for="customer">Customer Name</label>
+            <p-autoComplete [style]="{'width':'100%'}" [(ngModel)]="selectedCustomer" [suggestions]="filteredCustomers"
+              (completeMethod)="searchCustomer($event)" field="name" [dropdown]="true" (onSelect)="onCustomerSelect()"
+              placeholder="Search Customer" formControlName="customer">
+            </p-autoComplete>
+          </div>
+
+          <div class="col-md-6 mt-3">
+            <label class="d-block">Room Number</label>
+            <input type="text" pInputText class="w-100" formControlName="roomNumber" />
+          </div>
+
+          <div class="col-md-6 mt-3">
+            <label class="d-block">Email</label>
+            <input type="email" pInputText class="w-100" formControlName="email" />
+          </div>
+
+          <div class="col-md-6 mt-3">
+            <label class="d-block">Phone</label>
+            <input type="text" pInputText class="w-100" formControlName="phone" />
+          </div>
+
+          <div class="col-md-6 mt-3">
+            <label class="d-block">Amount</label>
+            <input type="number" class="w-100" pInputText formControlName="amount" />
+          </div>
+
+          <div class="col-md-6 mt-3">
+            <label class="d-block">Due Date</label>
+            <input type="date" pInputText class="w-100" formControlName="dueDate" />
+          </div>
+        </div>
+        <button class="mt-3" pButton type="submit" label="Send"></button>
+      </form>
     </div>
-  
-    <div class="p-field">
-      <img [src]="selectedCustomer.profilePic" *ngIf="selectedCustomer.profilePic" alt="" />
+    <div class="col-md-6" *ngIf="leftSideView">
+      <div class="profile-section">
+        <div class="d-flex justify-content-center">
+          <img [src]="selectedCustomer.profilePic" *ngIf="selectedCustomer.profilePic" alt="" class="profilePic"
+            height="150" width="150" />
+        </div>
+        <p class="name">{{selectedCustomer.name}}</p>
+        <div class="info-section">
+          <div class="info-column">
+            <p><strong>Email :</strong> <span class="ms-2">{{selectedCustomer.email}}</span></p>
+            <p><strong>Phone :</strong> <span class="ms-2">{{selectedCustomer.phone}}</span></p>
+            <p><strong>City :</strong> <span class="ms-2">{{selectedCustomer.city}}</span></p>
+          </div>
+          <div class="info-column">
+            <p><strong>Room No. :</strong> <span class="ms-2">{{selectedCustomer.roomNumber}}</span></p>
+            <p><strong>Amount :</strong> <span class="ms-2">{{selectedCustomer.rentAmount}}</span></p>
+            <p><strong>Date :</strong> <span class="ms-2">{{selectedCustomer.dueDate | date}}</span></p>
+          </div>
+        </div>
+      </div>
     </div>
-  
-    <div class="p-field">
-      <label>Room Number</label>
-      <input type="text" pInputText formControlName="roomNumber" />
-    </div>
-  
-    <div class="p-field">
-      <label>Email</label>
-      <input type="email" pInputText formControlName="email" />
-    </div>
-  
-    <div class="p-field">
-      <label>Phone</label>
-      <input type="text" pInputText formControlName="phone" />
-    </div>
-  
-    <div class="p-field">
-      <label>Amount</label>
-      <input type="number" pInputText formControlName="amount" />
-    </div>
-  
-    <div class="p-field">
-      <label>Due Date</label>
-      <input type="date" pInputText formControlName="dueDate" />
-    </div>
-  
-    <button pButton type="submit" label="Send"></button>
-  </form>
-  
+    
+  </div>
+</div>

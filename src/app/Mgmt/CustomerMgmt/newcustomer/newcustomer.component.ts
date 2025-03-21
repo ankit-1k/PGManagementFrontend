@@ -12,6 +12,8 @@ import Swal from 'sweetalert2';
 export class NewcustomerComponent implements OnInit {
   customerForm!: FormGroup;
   currentStep = 0;
+  displayCustomerDialog: boolean = false;
+  position: string = 'right';
 
   steps = [
     { label: 'Basic Information' },
@@ -35,12 +37,14 @@ export class NewcustomerComponent implements OnInit {
     { label: 'Double', value: 'Double' },
   ];
   availabilityMessage: string = '';
+  selectedImage: any;
+  imgHead: string = '';
 
   constructor(
     private fb: FormBuilder,
     private customerService: CustomermgmtService,
     private roomService: RoomsService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.customerForm = this.fb.group({
@@ -71,6 +75,7 @@ export class NewcustomerComponent implements OnInit {
       roomType: ['Single', Validators.required],
       rentAmount: ['6000', Validators.required],
       securityDeposit: ['1000', Validators.required],
+      password: ['', Validators.required],
     });
   }
 
@@ -184,18 +189,18 @@ export class NewcustomerComponent implements OnInit {
         if (response.availableBeds > 0) {
           this.availabilityMessage = `Room is available. ${response.availableBeds} beds left.`;
           Swal.fire({
-            title:'Available',
-            text:`Room is available. ${response.availableBeds} beds left.`,
-            icon:'success',
-            timer:2000
+            title: 'Available',
+            text: `Room is available. ${response.availableBeds} beds left.`,
+            icon: 'success',
+            timer: 2000
           })
         } else {
           this.availabilityMessage = 'Room is fully occupied.';
           Swal.fire({
-            title:'Full',
-            text:'This Room is already full...',
-            icon:'warning',
-            timer:2000
+            title: 'Full',
+            text: 'This Room is already full...',
+            icon: 'warning',
+            timer: 2000
           })
         }
       },
@@ -204,5 +209,16 @@ export class NewcustomerComponent implements OnInit {
           error.status === 404 ? 'Room not found.' : 'Server error.';
       }
     );
+  }
+  showViewDialog(position: any, imageType: any) {
+    if (imageType === 'profilePic') {
+      this.imgHead = 'Profile Img'
+      this.selectedImage = this.imagePreview.profilePic;
+    } else if (imageType === 'idProof') {
+      this.imgHead = 'Id Img'
+      this.selectedImage = this.imagePreview.idProof;
+    }
+    this.position = position
+    this.displayCustomerDialog = true
   }
 }

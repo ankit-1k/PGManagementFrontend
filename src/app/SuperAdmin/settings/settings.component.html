@@ -1,0 +1,29 @@
+<!-- <p>{{ message }}</p> -->
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="card mt-3 ps-4 pe-4 res-p-0" style="width: 25rem;">
+                    <div class="card-body">
+                     <form [formGroup]="passwordForm" (ngSubmit)="onSubmit()">
+                         <div class="field mt-3">
+                             <label for="" class="d-block">User Name</label>
+                             <input type="text" pInputText formControlName="userName" class="w-100" placeholder="Enter Username">
+                         </div>
+                         <div class="field mt-3">
+                             <label for="" class="d-block">Old Password</label>
+                             <input type="password" pInputText formControlName="oldPassword" class="w-100" placeholder="Enter Old Password">
+                         </div>
+                         <div class="field mt-3">
+                             <label for="" class="d-block">New Password</label>
+                             <input type="password" pInputText formControlName="newPassword" class="w-100" placeholder="Enter New Password">
+                         </div>
+                         <button type="submit" pButton label="Update Password" class="mt-3" icon="pi pi-save" [disabled]="passwordForm.invalid"></button>
+                     </form>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>

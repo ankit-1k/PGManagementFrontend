@@ -1,29 +1,24 @@
 <div>
-  <p-button (onClick)="showDialog('center')" label="Add Room"></p-button>
+  <div class="d-flex justify-content-end">
+    <p-button (onClick)="showDialog('center')" class="mt-3 me-1" label="Add Room"></p-button>
+  </div>
 
-  <p-dialog
-    header="Add Room"
-    [(visible)]="addRoomvisible"
-    [modal]="true"
-    [style]="{ width: '400px' }"
-  >
-    <form [formGroup]="roomForm" (ngSubmit)="createRoom()">
-      <div>
-        <label>Room Name</label>
-        <input type="text" pInputText formControlName="roomName" />
-      </div>
-      <div>
-        <label>Bed Count</label>
-        <input type="text" pInputText formControlName="roomBedCount" />
-      </div>
-      <button
-        pButton
-        type="submit"
-        label="Save"
-        [disabled]="!roomForm.valid"
-      ></button>
-    </form>
-  </p-dialog>
+  <div class="full-vh">
+    <p-dialog header="Add Room" [(visible)]="addRoomvisible" [modal]="true" [style]="{ width: '400px' }"
+      position="right">
+      <form [formGroup]="roomForm" (ngSubmit)="createRoom()">
+        <div>
+          <label class="d-block">Room Name</label>
+          <input type="text" class="w-100" pInputText formControlName="roomName" />
+        </div>
+        <div class="mt-2">
+          <label class="d-block">Bed Count</label>
+          <input type="text" class="w-100" pInputText formControlName="roomBedCount" />
+        </div>
+        <button pButton type="submit" class="mt-2" label="Save" icon="pi pi-save" [disabled]="!roomForm.valid"></button>
+      </form>
+    </p-dialog>
+  </div>
 
   <p-table [value]="rooms">
     <ng-template pTemplate="header">
@@ -40,69 +35,59 @@
         <td>{{ room.roomBedCount }}</td>
         <td>{{ getOccupiedBeds(room.roomName) }}</td>
         <td>
-          <button
-            pButton
-            icon="pi pi-trash"
-            (click)="deleteRoom(room._id)"
-          ></button>
-          <button pButton icon="pi pi-pencil" (click)="editRoom(room)"></button>
-          <button pButton icon="pi pi-eye" (click)="roomMembsers(room)"></button>
+          <button pButton icon="pi pi-trash" (click)="deleteRoom(room._id)"
+            class="p-button-rounded p-button-danger p-button-text p-button-raised"></button>
+          <button pButton icon="pi pi-pencil" (click)="editRoom(room)"
+            class="p-button-rounded me-1 p-button-info p-button-text p-button-raised ms-1"></button>
+          <button pButton icon="pi pi-eye" (click)="roomMembsers(room)"
+            class="p-button-rounded p-button-success p-button-text p-button-raised ms-1"></button>
         </td>
       </tr>
     </ng-template>
   </p-table>
 </div>
 
-<p-dialog
-  header="Edit Room"
-  [(visible)]="editRoomVisible"
-  [modal]="true"
-  [style]="{ width: '400px' }"
->
-  <form [formGroup]="roomForm" (ngSubmit)="updateRoom()">
-    <div>
-      <label>Room Name</label>
-      <input type="text" pInputText formControlName="roomName" />
-    </div>
-    <div>
-      <label>Bed Count</label>
-      <input type="text" pInputText formControlName="roomBedCount" />
-    </div>
-    <button
-      pButton
-      type="submit"
-      label="Update"
-      [disabled]="!roomForm.valid"
-    ></button>
-  </form>
-</p-dialog>
+<div class="full-vh">
+  <p-dialog header="Edit Room" position="right" [(visible)]="editRoomVisible" [modal]="true"
+    [style]="{ width: '400px' }">
+    <form [formGroup]="roomForm" (ngSubmit)="updateRoom()">
+      <div>
+        <label class="d-block">Room Name</label>
+        <input type="text" pInputText class="w-100" formControlName="roomName" />
+      </div>
+      <div class="mt-2">
+        <label class="d-block">Bed Count</label>
+        <input type="text" pInputText class="w-100" formControlName="roomBedCount" />
+      </div>
+      <button pButton type="submit" label="Update" class="mt-2" [disabled]="!roomForm.valid"></button>
+    </form>
+  </p-dialog>
+</div>
 
-<p-dialog
-  header="Room Members"
-  [(visible)]="roomMembersVisible"
-  [modal]="true"
-  [style]="{ width: '500px' }"
->
-  <ng-container *ngIf="roomDetails?.length > 0; else noData">
-    <p-table [value]="roomDetails">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Phone</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-member>
-        <tr>
-          <td>{{ member.name }}</td>
-          <td>{{ member.email }}</td>
-          <td>{{ member.phone }}</td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </ng-container>
+<div class="full-vh">
+  <p-dialog header="Room Members" position="right" [(visible)]="roomMembersVisible" [modal]="true"
+    [style]="{ width: '500px' }">
+    <ng-container *ngIf="roomDetails?.length > 0; else noData">
+      <p-table [value]="roomDetails">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-member>
+          <tr>
+            <td>{{ member.name }}</td>
+            <td>{{ member.email }}</td>
+            <td>{{ member.phone }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </ng-container>
 
-  <ng-template #noData>
-    <p>No members found for this room.</p>
-  </ng-template>
-</p-dialog>
+    <ng-template #noData>
+      <p>No members found for this room.</p>
+    </ng-template>
+  </p-dialog>
+</div>

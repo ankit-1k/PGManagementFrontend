@@ -1,0 +1,67 @@
+<div class="menu-container container-fluid">
+    <h2>Menu</h2>
+
+    <!-- Import & Add Buttons -->
+    <div class="d-flex justify-content-end">
+        <button pButton label="Add Menu" icon="pi pi-plus" (click)="openMenuDialog()"></button>
+    </div>
+
+    <!-- Weekly Menu Table -->
+    <p-table [value]="weeklyMenu" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Actions</th>
+                <th>Day</th>
+                <th>Breakfast</th>
+                <th>Lunch</th>
+                <th>Dinner</th>
+                <th>Last Updated</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-menu>
+            <tr>
+                <td>
+                    <button pButton icon="pi pi-pencil" class="p-button-rounded me-1 p-button-info p-button-text p-button-raised me-1" (click)="openMenuDialog(menu)"></button>
+                    <button pButton icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-text p-button-raised" (click)="deleteMenu(menu._id)"></button>
+                </td>
+                <td>{{ menu.day }}</td>
+                <td>{{ menu.breakfast }}</td>
+                <td>{{ menu.lunch }}</td>
+                <td>{{ menu.dinner }}</td>
+                <td>{{ menu.date | date }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<!-- Add/Edit Menu Dialog -->
+<div class="full-vh">
+    <p-dialog [(visible)]="menuDialog" [modal]="true" [header]="isEdit ? 'Edit Menu' : 'Add Menu'"
+        [style]="{ width: '50vw' }" position="right">
+        <form [formGroup]="menuForm">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="day">Day</label>
+                    <p-dropdown [options]="day" formControlName="day" placeholder="Select Day"></p-dropdown>
+                </div>
+                <div class="col-md-6">
+                    <label for="breakfast">Breakfast</label>
+                    <input pInputText class="w-100" id="breakfast" formControlName="breakfast" />
+                </div>
+                <div class="col-md-6 mt-3">
+                    <label for="lunch">Lunch</label>
+                    <input pInputText class="w-100" id="lunch" formControlName="lunch" />
+                </div>
+                <div class="col-md-6 mt-3">
+                    <label for="dinner">Dinner</label>
+                    <input pInputText class="w-100" id="dinner" formControlName="dinner" />
+                </div>
+            </div>
+        </form>
+
+        <p-footer>
+            <button pButton label="Cancel" class="position-absolute bottom-0 mb-2 start-0 ms-2" icon="pi pi-times" (click)="closeMenuDialog()"></button>
+            <button pButton label="Save" class="position-absolute bottom-0 mb-2 end-0 me-2" icon="pi pi-check" (click)="saveMenu()" [disabled]="menuForm.invalid"></button>
+        </p-footer>
+    </p-dialog>
+</div>

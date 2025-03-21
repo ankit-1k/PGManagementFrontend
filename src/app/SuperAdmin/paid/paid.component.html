@@ -1,0 +1,32 @@
+<div class="paid-report">
+    <div class="d-flex justify-content-between">
+        <h4>Customer Purchase Summary:</h4>
+        <button pButton icon="pi pi-chart-line" class="p-0" (click)="highDialog()"></button>
+    </div>
+    <p-table [value]="customerList" responsiveLayout="scroll" class="mt-3">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Total Amount</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-customer>
+            <tr>
+                <td>{{ customer.name }}</td>
+                <td>{{ customer.email }}</td>
+                <td>₹{{ customer.amount }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<div class="full-vh">
+    <p-dialog [(visible)]="highVisible" [modal]="true" header='Top Customer' [style]="{ width: '50vw' }"
+        position="right">
+        <p><strong>Name:</strong> {{ topCustomer.name }}</p>
+        <p><strong>Email:</strong> {{ topCustomer.email }}</p>
+        <p><strong>Total Spent:</strong> ₹{{ topCustomer.amount }}</p>
+        <h6 class="mt-5 blink">Total Earnings In This Year: ₹{{ totalAmount }}</h6>
+    </p-dialog>
+</div>

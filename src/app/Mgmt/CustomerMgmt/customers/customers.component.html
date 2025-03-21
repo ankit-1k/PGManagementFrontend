@@ -5,6 +5,7 @@
                 [rowsPerPageOptions]="[5, 10, 15]">
                 <ng-template pTemplate="header">
                     <tr>
+                        <th>Actions</th>
                         <th>Name</th>
                         <th>Profile</th>
                         <th>Phone</th>
@@ -13,15 +14,24 @@
                         <th>Bed Number</th>
                         <th>Check-in Date</th>
                         <th>Rent Amount</th>
-                        <th>Actions</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-customer>
                     <tr>
+                        <td>
+                            <p-button styleClass="p-button-rounded me-1 p-button-info p-button-text p-button-raised"
+                                icon="pi pi-pencil" (click)="openEditDialog(customer)"></p-button>
+                            <p-button styleClass="p-button-rounded p-button-danger p-button-text p-button-raised"
+                                icon="pi pi-trash" (click)="confirmDelete(customer._id)">
+                            </p-button>
+                            <p-button styleClass="p-button-rounded p-button-success p-button-text p-button-raised ms-1"
+                                icon="pi pi-eye" (click)="viewCustomer(customer, 'right')">
+                            </p-button>
+                        </td>
                         <td>{{ customer.name }}</td>
                         <td>
-                            <img [src]="customer.profilePic" alt="Profile" width="50" height="50"
-                                class="rounded-circle">
+                            <p-image [src]="customer.profilePic" [preview]="true" alt="Profile" width="50" height="50"
+                                class="rounded-circle"></p-image>
                         </td>
                         <td>{{ customer.phone }}</td>
                         <td>{{ customer.email }}</td>
@@ -29,13 +39,6 @@
                         <td>{{ customer.bedNumber }}</td>
                         <td>{{ customer.checkInDate | date: 'yyyy-MM-dd' }}</td>
                         <td>${{ customer.rentAmount }}</td>
-                        <td>
-                            <p-button styleClass="p-button-rounded me-1 p-button-info p-button-text p-button-raised"
-                                icon="pi pi-pencil" (click)="openEditDialog(customer)"></p-button>
-                            <p-button styleClass="p-button-rounded p-button-danger p-button-text p-button-raised"
-                                icon="pi pi-trash" (click)="confirmDelete(customer._id)">
-                            </p-button>
-                        </td>
                     </tr>
                 </ng-template>
             </p-table>
@@ -43,48 +46,81 @@
     </div>
 </div>
 
-<!-- PrimeNG Dialog -->
-<p-dialog [(visible)]="editDialog" header="Update Customer" [modal]="true" [responsive]="true"
-    [style]="{ width: '50vw' }">
-    <form [formGroup]="editForm" (ngSubmit)="updateCustomer()">
-        <div class="p-fluid">
-            <div class="p-field">
-                <label for="name">Name</label>
-                <input id="name" type="text" pInputText formControlName="name">
+<div class="full-vh">
+    <p-dialog [(visible)]="editDialog" header="Update Profile" [modal]="true" [responsive]="true" position="right"
+        [style]="{ width: '50vw' }">
+        <form [formGroup]="editForm" (ngSubmit)="updateCustomer()">
+            <div class="row">
+                <p-image [src]="profilePic" alt="empty" class="profilePic" [preview]="true" height="70" width="70"></p-image>
             </div>
-            <div class="p-field">
-                <label for="phone">Phone</label>
-                <input id="phone" type="text" pInputText formControlName="phone">
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="d-block" for="profilePic">Profile Picture</label>
+                    <input id="profilePic" type="file"  class="form-control mb-2" (change)="onFileSelect($event, 'profilePic')">
+                </div>
+                <div class="col-md-6">
+                    <label class="d-block" for="idProof">ID Proof</label>
+                    <div class="row">
+                        <div class="col-9 pe-0">
+                            <input id="idProof" type="file"  class="form-control mb-2" (change)="onFileSelect($event, 'idProof')">
+                        </div>
+                        <div class="col-3 ps-0">
+                            <p-image [src]="idProof" alt="empty" class="" [preview]="true" height="100%" width="100%"></p-image>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="d-block" for="name">Name</label>
+                    <input id="name" type="text" pInputText formControlName="name" class="w-100 mb-2">
+                </div>
+                <div class="col-md-6">
+                    <label class="d-block" for="phone">Phone</label>
+                    <input id="phone" type="text" pInputText formControlName="phone" class="w-100 mb-2">
+                </div>
+                <div class="col-md-6">
+                    <label class="d-block" for="email">Email</label>
+                    <input id="email" type="email" pInputText formControlName="email" class="w-100 mb-2">
+                </div>
+                <div class="col-md-6">
+                    <label class="d-block" for="roomNumber">Room Number</label>
+                    <input id="roomNumber" type="text" pInputText formControlName="roomNumber" class="w-100 mb-2">
+                </div>
+                <div class="col-md-6">
+                    <label class="d-block" for="bedNumber">Bed Number</label>
+                    <input id="bedNumber" type="text" pInputText formControlName="bedNumber" class="w-100 mb-2">
+                </div>
+                <div class="col-md-6">
+                    <label class="d-block" for="rentAmount">Rent Amount</label>
+                    <input id="rentAmount" type="number" pInputText formControlName="rentAmount" class="w-100 mb-2">
+                </div>
             </div>
-            <div class="p-field">
-                <label for="email">Email</label>
-                <input id="email" type="email" pInputText formControlName="email">
+            <div class="p-d-flex p-jc-end">
+                <button pButton type="button" label="Cancel" class="p-button-danger position-absolute bottom-0 start-0 ms-1 mb-1" (click)="editDialog = false"></button>
+                <button pButton type="submit" label="Update" class="p-button-primary position-absolute bottom-0 end-0 me-1 mb-1"
+                    [disabled]="editForm.invalid"></button>
             </div>
-            <div class="p-field">
-                <label for="roomNumber">Room Number</label>
-                <input id="roomNumber" type="text" pInputText formControlName="roomNumber">
+        </form>
+    </p-dialog>
+</div>
+
+<div class="full-vh">
+    <p-dialog [(visible)]="displayCustomerDialog" header="Customer Details" [modal]="true" [closable]="true"
+        [position]="position" [style]="{ width: '350px'}">
+    
+        <div *ngIf="selectedCustomer">
+            <div class="d-flex justify-content-center">
+                <img [src]="selectedCustomer.profilePic" alt="Profile Pic" class="profilePic" width="80">
             </div>
-            <div class="p-field">
-                <label for="bedNumber">Bed Number</label>
-                <input id="bedNumber" type="text" pInputText formControlName="bedNumber">
-            </div>
-            <div class="p-field">
-                <label for="rentAmount">Rent Amount</label>
-                <input id="rentAmount" type="number" pInputText formControlName="rentAmount">
-            </div>
-            <div class="p-field">
-                <label for="idProof">ID Proof</label>
-                <input id="idProof" type="file" (change)="onFileSelect($event, 'idProof')">
-            </div>
-            <div class="p-field">
-                <label for="profilePic">Profile Picture</label>
-                <input id="profilePic" type="file" (change)="onFileSelect($event, 'profilePic')">
-            </div>
+            <p class="mt-3"><strong>Name:</strong> {{ selectedCustomer.name }}</p>
+            <p><strong>Email:</strong> {{ selectedCustomer.email }}</p>
+            <p><strong>Phone:</strong>{{ selectedCustomer.phone }}</p>
+            <p><strong>Check-In:</strong> {{ selectedCustomer.checkInDate | date: 'MMM d, y' }}</p>
+            <p><strong>Room:</strong> {{ selectedCustomer.roomNumber }} ({{ selectedCustomer.roomType }})</p>
+            <p><strong>Rent:</strong> {{ selectedCustomer.rentAmount | currency: 'INR' }}</p>
+            <p-button (click)="contactCustomer('phone', selectedCustomer.phone)" styleClass="p-button-rounded p-button-primary p-button-text p-button-raised ms-1 position-absolute bottom-0 start-0 mb-1" icon="pi pi-phone">
+            </p-button>
+            <p-button (click)="contactCustomer('whatsapp', selectedCustomer.phone)" styleClass="p-button-rounded p-button-success p-button-text p-button-raised me-1 position-absolute bottom-0 end-0 mb-1" icon="pi pi-whatsapp">
+            </p-button>
         </div>
-        <div class="p-d-flex p-jc-end">
-            <button pButton type="button" label="Cancel" class="p-button-text" (click)="editDialog = false"></button>
-            <button pButton type="submit" label="Update" class="p-button-primary"
-                [disabled]="editForm.invalid"></button>
-        </div>
-    </form>
-</p-dialog>
+    </p-dialog>
+</div>

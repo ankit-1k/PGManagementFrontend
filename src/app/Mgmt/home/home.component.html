@@ -1,2 +1,13 @@
-<p>home works!</p>
-<!-- <p *ngIf="isAuthenticated">login success</p> -->
+<button pButton type="button" label="Verify" (click)="showDialog = true"></button>
+
+<p-dialog header="Verification" [(visible)]="showDialog" [modal]="true">
+  <div class="p-fluid">
+    <button pButton type="button" label="Send OTP" (click)="sendOTP()"></button>
+
+    <div *ngIf="otpSent">
+      <label for="otp">Enter OTP</label>
+      <input type="text" id="otp" [(ngModel)]="otp" pInputText required />
+      <button pButton type="button" label="Verify OTP" (click)="verifyOTP()"></button>
+    </div>
+  </div>
+</p-dialog>

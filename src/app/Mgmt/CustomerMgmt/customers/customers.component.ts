@@ -14,6 +14,11 @@ export class CustomersComponent implements OnInit {
   editForm: FormGroup;
   selectedCustomerId: string = '';
   selectedFiles: { idProof?: File; profilePic?: File } = {};
+  selectedCustomer: any;
+  displayCustomerDialog: boolean = false;
+  position: string = 'right';
+  profilePic: any;
+  idProof: any;
 
   constructor(private customerMgmtService: CustomermgmtService, private fb: FormBuilder) {
     this.editForm = this.fb.group({
@@ -43,6 +48,8 @@ export class CustomersComponent implements OnInit {
 
   openEditDialog(customer: any) {
     this.selectedCustomerId = customer._id;
+    this.profilePic = customer.profilePic;
+    this.idProof=customer.idProof
     this.editForm.patchValue({
       name: customer.name,
       phone: customer.phone,
@@ -108,10 +115,10 @@ export class CustomersComponent implements OnInit {
       next: () => {
         Swal.fire('Deleted!', 'The customer has been removed.', 'success');
         Swal.fire({
-          title:'Deleted!',
-          text:'The customer has been removed.',
-          icon:'success',
-          timer:1000
+          title: 'Deleted!',
+          text: 'The customer has been removed.',
+          icon: 'success',
+          timer: 1000
         })
         this.allCustomerList(); // Refresh list
       },
@@ -121,4 +128,23 @@ export class CustomersComponent implements OnInit {
       }
     });
   }
+
+  viewCustomer(customer: any,position: string) {
+    this.position = position;
+    this.selectedCustomer = customer; 
+    this.displayCustomerDialog = true;
+  }  
+
+  contactCustomer(type: string, phoneNumber: string) {
+    if (!phoneNumber) {
+      console.error('Phone number is missing!');
+      return;
+    }
+  
+    if (type === 'phone') {
+      window.open(`tel:${phoneNumber}`, '_self'); 
+    } else if (type === 'whatsapp') {
+      window.open(`https://wa.me/${phoneNumber}`, '_blank'); 
+    }
+  }  
 }

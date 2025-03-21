@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit {
     // ✅ Listen to route changes and hide the header on the login page
     this.router.events.subscribe(() => {
       this.showHeader = this.router.url !== '/login';
+      this.showHeader = this.router.url !== '/userhome';
     });
   }
 

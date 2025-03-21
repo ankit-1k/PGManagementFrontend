@@ -47,6 +47,7 @@ import { CustomersComponent } from './Mgmt/CustomerMgmt/customers/customers.comp
 import { UpcomingrentsComponent } from './Mgmt/CustomerMgmt/upcomingrents/upcomingrents.component';
 import { RoomsComponent } from './RoomMgmt/rooms/rooms.component';
 import { PaymentsComponent } from './Mgmt/CustomerMgmt/payments/payments.component';
+import { PgmenuComponent } from './Menu/pgmenu/pgmenu.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { PaymentsComponent } from './Mgmt/CustomerMgmt/payments/payments.compone
     CustomersComponent,
     UpcomingrentsComponent,
     RoomsComponent,
-    PaymentsComponent
+    PaymentsComponent,
+    PgmenuComponent,
   ],
   imports: [
     ReactiveFormsModule,

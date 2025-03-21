@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CustomermgmtService } from 'src/app/services/CustomerMgmt/customermgmt.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-payments',
@@ -13,6 +14,7 @@ export class PaymentsComponent implements OnInit {
   customers: any[] = [];
   filteredCustomers: any[] = [];
   selectedCustomer: any = {};
+  leftSideView:boolean=false
 
   constructor(private fb: FormBuilder, private customerService: CustomermgmtService) { 
     this.paymentForm = this.fb.group({
@@ -40,7 +42,8 @@ export class PaymentsComponent implements OnInit {
           email: customer.email,
           rentAmount:customer.rentAmount,
           phone: customer.phone,
-          dueDate:customer.dueDate
+          dueDate:customer.dueDate,
+          city:customer.city
         }));
       },
       error: (error) => {
@@ -58,6 +61,7 @@ export class PaymentsComponent implements OnInit {
 
   onCustomerSelect() {
     if (this.selectedCustomer) {
+      this.leftSideView=true
       const currentDate = new Date().toISOString().split('T')[0]; // Fetch current date in YYYY-MM-DD format
       this.paymentForm.patchValue({
         roomNumber: this.selectedCustomer.roomNumber,
@@ -77,15 +81,30 @@ export class PaymentsComponent implements OnInit {
       this.customerService.sendPayment(data).subscribe({
         next: (res) => {
           console.log('Payment Sent', res);
-          alert('Payment Sent Successfully');
+          Swal.fire({
+            title:'Payment Success',
+            text:'Your payment has been completed. A receipt will be sent to your email.',
+            icon:'success',
+            timer:1000
+          })
         },
         error: (err) => {
           console.error(err);
-          alert('Failed to Send Payment');
+          Swal.fire({
+            title:'Payment Failed',
+            text:'Failed to send payment mail.',
+            icon:'error',
+            timer:1000
+          })
         }
       });
     } else {
-      alert('Please fill out all fields');
+      Swal.fire({
+        title:'Invalid',
+        text:'Please fillout all fields.',
+        icon:'warning',
+        timer:1000
+      })
     }
   }
   

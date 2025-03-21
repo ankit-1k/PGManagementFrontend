@@ -9,7 +9,7 @@ import { RoomsService } from 'src/app/services/RoomMgmt/rooms.service';
 })
 export class RoomsComponent implements OnInit {
   addRoomvisible: boolean = false;
-  addRoomposition: string = 'center';
+  addRoomposition: string = 'right';
   roomForm: FormGroup;
   rooms: any[] = [];
   customers: any[] = [];

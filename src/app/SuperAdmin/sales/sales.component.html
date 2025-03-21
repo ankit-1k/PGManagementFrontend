@@ -1,0 +1,13 @@
+<div class="sales-report">
+    <div class="d-flex justify-content-between">
+        <h6>{{ selectedYear }}: ₹{{ totalEarnings }}</h6>
+        <p-dropdown [options]="yearOptions" [(ngModel)]="selectedYear" placeholder="Select Year"
+            (onChange)="filterDataByYear(selectedYear)">
+        </p-dropdown>
+    </div>
+
+    <!-- Chart -->
+    <div style="width: 100%; height: 400px;">
+        <p-chart type="bar" [data]="chartData" [options]="chartOptions"></p-chart>
+    </div>
+</div>

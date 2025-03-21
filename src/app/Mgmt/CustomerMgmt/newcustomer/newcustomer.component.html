@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
   <form [formGroup]="customerForm">
     <p-steps [model]="steps" [activeIndex]="currentStep"></p-steps>
 
@@ -16,11 +16,7 @@
         </div>
         <div class="col-md-4">
           <label>Gender</label>
-          <p-dropdown
-            [options]="gender"
-            formControlName="gender"
-            placeholder="Select Gender"
-          ></p-dropdown>
+          <p-dropdown [options]="gender" formControlName="gender" placeholder="Select Gender"></p-dropdown>
         </div>
         <div class="col-md-4">
           <label>Phone</label>
@@ -28,12 +24,7 @@
         </div>
         <div class="col-md-4">
           <label>Email</label>
-          <input
-            type="email"
-            pInputText
-            class="w-100"
-            formControlName="email"
-          />
+          <input type="email" pInputText class="w-100" formControlName="email" />
         </div>
       </div>
     </div>
@@ -44,19 +35,11 @@
       <div class="row">
         <div class="col-md-6">
           <label>Permanent Address</label>
-          <textarea
-            pInputTextarea
-            class="w-100"
-            formControlName="permanentAddress"
-          ></textarea>
+          <textarea pInputTextarea class="w-100" formControlName="permanentAddress"></textarea>
         </div>
         <div class="col-md-6">
           <label>Current Address</label>
-          <textarea
-            pInputTextarea
-            class="w-100"
-            formControlName="currentAddress"
-          ></textarea>
+          <textarea pInputTextarea class="w-100" formControlName="currentAddress"></textarea>
         </div>
         <div class="col-md-4">
           <label>City</label>
@@ -68,12 +51,7 @@
         </div>
         <div class="col-md-4">
           <label>Pincode</label>
-          <input
-            type="text"
-            pInputText
-            class="w-100"
-            formControlName="pincode"
-          />
+          <input type="text" pInputText class="w-100" formControlName="pincode" />
         </div>
       </div>
     </div>
@@ -84,47 +62,25 @@
       <div class="row">
         <div class="col-md-4">
           <label>Profile Picture</label>
-          <input
-            type="file"
-            (change)="onFileSelect($event, 'profilePic')"
-            accept="image/*"
-          />
-          <img
-            *ngIf="imagePreview.profilePic"
-            [src]="imagePreview.profilePic"
-            height="100"
-          />
+          <div class="d-flex">
+            <input type="file" class="form-control" (change)="onFileSelect($event, 'profilePic')" accept="image/*" />
+            <button pButton icon="pi pi-eye" (click)="showViewDialog('right','profilePic')"></button>
+          </div>
         </div>
         <div class="col-md-4">
           <label>ID Proof</label>
-          <input
-            type="file"
-            (change)="onFileSelect($event, 'idProof')"
-            accept="image/*"
-          />
-          <img
-            *ngIf="imagePreview.idProof"
-            [src]="imagePreview.idProof"
-            height="100"
-          />
+          <div class="d-flex">
+            <input type="file" class="form-control" (change)="onFileSelect($event, 'idProof')" accept="image/*" />
+            <button pButton icon="pi pi-eye" (click)="showViewDialog('right','idProof')"></button>
+          </div>
         </div>
         <div class="col-md-4">
           <label>Emergency Contact Name</label>
-          <input
-            type="text"
-            pInputText
-            class="w-100"
-            formControlName="emergencyName"
-          />
+          <input type="text" pInputText class="w-100" formControlName="emergencyName" />
         </div>
         <div class="col-md-4">
           <label>Emergency Contact Number</label>
-          <input
-            type="text"
-            pInputText
-            class="w-100"
-            formControlName="emergencyContact"
-          />
+          <input type="text" pInputText class="w-100" formControlName="emergencyContact" />
         </div>
       </div>
     </div>
@@ -140,76 +96,54 @@
         <div class="col-md-4">
           <label>Room Number</label>
           <div class="d-flex">
-            <input
-              type="text"
-              pInputText
-              class="w-100"
-              formControlName="roomNumber"
-            />
+            <input type="text" pInputText class="w-100" formControlName="roomNumber" />
             <button pButton label="check" (click)="checkAvailability()"></button>
           </div>
         </div>
         <div class="col-md-4">
           <label>Bed Number</label>
-          <input
-            type="text"
-            pInputText
-            class="w-100"
-            formControlName="bedNumber"
-          />
+          <input type="text" pInputText class="w-100" formControlName="bedNumber" />
         </div>
         <div class="col-md-4">
           <label>Room Type</label>
-          <p-dropdown
-            [options]="roomType"
-            formControlName="roomType"
-            placeholder="Select Room Type"
-          ></p-dropdown>
+          <p-dropdown [options]="roomType" formControlName="roomType" placeholder="Select Room Type"></p-dropdown>
         </div>
         <div class="col-md-4">
           <label>Rent Amount</label>
-          <input
-            type="text"
-            pInputText
-            class="w-100"
-            formControlName="rentAmount"
-          />
+          <input type="text" pInputText class="w-100" formControlName="rentAmount" />
         </div>
         <div class="col-md-4">
           <label>Security Deposit</label>
-          <input
-            type="text"
-            pInputText
-            class="w-100"
-            formControlName="securityDeposit"
-          />
+          <input type="text" pInputText class="w-100" formControlName="securityDeposit" />
+        </div>
+        <div class="col-md-4">
+          <label>Password</label>
+          <input type="text" pInputText class="w-100" formControlName="password" />
         </div>
       </div>
     </div>
 
     <!-- Navigation Buttons -->
-    <div class="mt-3">
-      <button
-        pButton
-        label="Previous"
-        icon="pi pi-arrow-left"
-        (click)="prevStep()"
-        [disabled]="currentStep === 0"
-      ></button>
-      <button
-        pButton
-        label="Next"
-        icon="pi pi-arrow-right"
-        (click)="nextStep()"
-        *ngIf="currentStep < steps.length - 1"
-      ></button>
-      <button
-        pButton
-        label="Submit"
-        icon="pi pi-check"
-        (click)="submitForm()"
-        *ngIf="currentStep === steps.length - 1"
-      ></button>
+    <div>
+      <button pButton label="Previous" icon="pi pi-arrow-left" (click)="prevStep()"
+        class="position-absolute bottom-0 mb-2" [disabled]="currentStep === 0"></button>
+      <button pButton label="Next" icon="pi pi-arrow-right" (click)="nextStep()"
+        class="position-absolute bottom-0 mb-2 end-0 me-2" *ngIf="currentStep < steps.length - 1"></button>
+      <button pButton label="Submit" icon="pi pi-check" (click)="submitForm()"
+        class="position-absolute bottom-0 mb-2 end-0 me-2" *ngIf="currentStep === steps.length - 1"></button>
     </div>
   </form>
+</div>
+
+<!-- Preview img dialog -->
+<div class="full-vh">
+  <p-dialog [(visible)]="displayCustomerDialog" header="Customer Details" [modal]="true" [closable]="true"
+    [position]="position" [style]="{ width: '350px'}">
+    <h5>{{imgHead}}</h5>
+    <img *ngIf="selectedImage" [src]="selectedImage" height="200px" width="200px" />
+
+    <div class="d-flex justify-content-center align-items-center" style="height: 60vh;">
+      <p *ngIf="!selectedImage" class="blink text-danger">Select an Image</p>
+    </div>
+  </p-dialog>
 </div>
